@@ -1,0 +1,22 @@
+{
+  "name": "nivalisjs",
+  "version": "1.0.0",
+  "description": "A JS game engine made with the WebGL API.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Esilff/NivalisJS.git"
+  },
+  "author": "Esilff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Esilff/NivalisJS/issues"
+  },
+  "homepage": "https://github.com/Esilff/NivalisJS#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
