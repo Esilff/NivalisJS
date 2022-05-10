@@ -3,7 +3,9 @@ const path = require('path');
 
 async function readFile(path) {  
     try {
-        let fileContent = await fs.readFile(path);
+        let fileContent;
+        await fs.readFile(path).then((result) => {fileContent = result.toString()});
+        console.log(fileContent);
         return fileContent;
     } catch(err) {
         console.err(err);
