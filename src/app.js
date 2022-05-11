@@ -1,13 +1,14 @@
 const express = require('express');
 const app = express();
 const IO = require('./engine/fileIO/IO.js');
+const fp = require('./engine/fileIO/FileParser.js');
 const port = 5050;
 
 app.use('/static', express.static('./public'));
 
 app.get('/', async (req, res) =>{
   let fileContent = await IO.readFile('./assets/shaders/red.glsl');
-  console.log(fileContent);
+  console.log(fp.parseGLSL(fileContent));
   res.status(200).json({content: fileContent});
   
   res.end();
