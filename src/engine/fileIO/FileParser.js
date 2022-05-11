@@ -1,7 +1,8 @@
 /**
- * 
+ * This function divide the vertex and fragment part in two strings. It's necessary to get a shader in one unique file instead of a file 
+ * for the vertex shader and another file for the fragment shader.
  * @param {String} fileContent the content of a file 
- * @returns 
+ * @returns an object with two parameters, the vertex part of the glsl file and the fragment part of the file.
  */
 
 function parseGLSL(fileContent) {
