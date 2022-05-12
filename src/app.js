@@ -16,6 +16,12 @@ app.get('/', async (req, res) =>{
   
 });
 
+app.get('/filepath', async(req,res) => {
+  let folderContent = await IO.readFile(filepath);
+  res.status(200).json({content : folderContent});
+  res.end();
+})
+
 app.listen(port, 'localhost' , () => {
   console.log(`Example app listening on port ${port}`);
 })
