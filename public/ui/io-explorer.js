@@ -26,12 +26,12 @@ window.addEventListener('load', async() => {
         }
         else {
             html = `<div class="logo-container">
-                        <img src="${files.content[i].substring(files.content[i].indexOf('.') + 1) + '.svg'}">
+                        <img src="./assets/logo/${files.content[i].substring(files.content[i].indexOf('.') + 1) + '.svg'}">
                         <p>${files.content[i]}</p>
                     </div>`;
         }
         console.log(html);
-        contentDisplayer.append(html);
+        contentDisplayer.innerHTML += html;
     }
 });
 
