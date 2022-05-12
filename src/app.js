@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const IO = require('./engine/fileIO/IO.js');
 const fp = require('./engine/fileIO/FileParser.js');
+const PATH = require('path');
 const port = 5050;
 
 app.use('/static', express.static('./public'));
@@ -16,8 +17,17 @@ app.get('/', async (req, res) =>{
   
 });
 
-app.get('/filepath', async(req,res) => {
-  let folderContent = await IO.readFile(filepath);
+app.get('/filepath/:path', async(req,res) => {
+  console.log(req.params);
+  let path = req.params.path;
+  
+  path = path.replace(/-/g, '/');
+  
+  
+  
+  
+  let folderContent = await IO.getDirContent(PATH.resolve());
+  console.log(folderContent);
   res.status(200).json({content : folderContent});
   res.end();
 })
