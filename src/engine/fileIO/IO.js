@@ -14,12 +14,13 @@ async function readFile(path) {
 }
 
 async function getDirContent(dir) { 
+    let dirContent;
     try {
-        let dirContent = await fs.readdir(dir).then(value => {return JSON.stringify(value)})
+        await fs.readdir(dir).then(value => {dirContent = value});
     } catch(err) {
         console.log(err);
     }
-    
+    return dirContent;
 }
 
 module.exports = {readFile, getDirContent};

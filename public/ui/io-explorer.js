@@ -8,7 +8,7 @@ window.addEventListener('load', async() => {
             'Content-Type': 'application/json'
         },
         body : path
-    });
+    }).then(response => response.json());
     console.log(files);
 
 });
