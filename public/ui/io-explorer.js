@@ -1,7 +1,9 @@
 var path = '';
 const menu = document.querySelector('#menu');
 const contentDisplayer = document.querySelector('#folder-content');
+const zoomController = document.querySelector('#zoom-controller');
 
+/* --- Getting root content on load ---  */
 
 window.addEventListener('load', async() => {
     console.log('Waiting for answer from the server');
@@ -35,5 +37,29 @@ window.addEventListener('load', async() => {
     }
 });
 
+/* --- zoom controller slide --- */
+
+function onSliderDown(event) {
+    zoomController.addEventListener('mousemove', moveSlider);
+    zoomController.addEventListener('mouseup', onSliderUp);
+
+    let prevX = event.x;
+    
+
+    function moveSlider(event) {
+        let newX = prevX - event.x;
+        if (parseInt(zoomController.style.left) > 0 || parseInt(zoomController.style.left) < 96)
+        zoomController.style.left = zoomController.style.left + newX + '%';
+    }
+
+    function onSliderUp() {
+        zoomController.removeEventListener('mousemove', moveSlider);
+        zoomController.removeEventListener('mouseup', onSliderUp);
+    }
+}
+
+
+
+zoomController.addEventListener('mousedown', onSliderDown);
 
 

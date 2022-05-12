@@ -25,7 +25,7 @@
 
 #folder-content {
     position: absolute;
-    width: 100%;
+    width: 99.25%;
     height: 90%;
     top: 50px;
     left: 0.75%;
@@ -53,6 +53,37 @@
     font-family: Quicksand;
     font-size: 90%;
     transition: font-size 0.5s;
+}
+
+#parameters {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4%;
+    background: #2F3338;
+}
+
+#zoom-bar {
+    position: absolute;
+    top: 0;
+    bottom:0;
+    right: 1%;
+    margin: auto 0;
+    width: 15%;
+    height: 20%;
+    background: #b2c3d8;
+    border-radius: 5px;
+}
+
+#zoom-controller {
+    position: absolute;
+    left: 0px; /* min : 0px - max : 220px */
+    top: -75%;
+    width: 15px;
+    height: 15px;
+    background: #627995;
+    border-radius: 100%;
 }
 
 @media screen and (max-width:800px) {
