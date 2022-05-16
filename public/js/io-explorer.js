@@ -87,14 +87,6 @@ function setPathSelector(path) {
     menu.innerHTML += html;
 }
 
-function reconstructPath(array, limitIndex) {
-    let path = '';
-    for (let i = 0; i <= limitIndex; i--) {
-        if (i == 0) path += '.-';
-        else path += '-' + array[i];
-    }
-    return path;
-}
 
 /**
  * 
@@ -144,6 +136,7 @@ async function setFolderContent(path) {
         folders[i].addEventListener('dblclick', () => updatePath(nextPath.toString()));
     };
 }
+
 
 /* --- zoom controller slide --- */
 
