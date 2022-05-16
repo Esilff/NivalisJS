@@ -110,13 +110,14 @@
 #options-menu {
     position: absolute;
     z-index: 5;
-    width: 250px;
+    width: 100px;
     height: auto;
     top: 50%;
     border-radius: 5px;
     background: #647480;
     overflow: hidden;
     transition: ease 0.1s opacity;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.438);
 }
 
 #options-menu-content {
@@ -126,8 +127,17 @@
 
 .options-menu-item {
     width: 100%;
-    height: 20px;
+    height: 30px;
+    font-family: Quicksand;
+    color: white;
+    text-align: center;
 }
+.options-menu-item:hover {
+    background-color: #768a9a;
+    cursor: pointer;
+    
+}
+
 
 @media screen and (max-width:800px) {
     .logo-container p {
