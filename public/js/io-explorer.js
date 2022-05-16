@@ -1,4 +1,4 @@
-var path = '';
+var path = '.-';
 const menu = document.querySelector('#menu');
 const contentDisplayer = document.querySelector('#folder-content');
 const zoomController = document.querySelector('#zoom-controller');
@@ -10,6 +10,10 @@ window.addEventListener('load', () => {
     setFolderContent(path);
 });
 
+window.addEventListener('contextmenu', (e)=> {
+    e.preventDefault();
+}, false);
+
 
 /* ----- UTIL FUNCTIONS ----- */
 
@@ -20,15 +24,18 @@ window.addEventListener('load', () => {
  */
 
 function updatePath(newPath) {
-    if (newPath !== '')  {
+    if (typeof newPath !== 'string')  {
         console.log('Path has to be a string');
         return null;
     }
+    console.log("Update path : ",path, newPath);
     path = newPath;
+    
     menu.innerHTML = '';
     contentDisplayer.innerHTML = '';
     setPathSelector(path);
     setFolderContent(path);
+    
     return;
 }
 
@@ -39,13 +46,36 @@ function updatePath(newPath) {
  */
 
 function setPathSelector(path) {
-    if (path !== '')  {
+    if (typeof path !== 'string')  {
         console.log('Path has to be a string');
         return null;
     }
     let html = '<div id="path-selector">';
-    if (path == '') html += `<h2>./</h2></div>`;
+    if (path == '.-') html += `<h2 class="root">./</h2>`
+    else {
+        console.log("Path to structure : ",path)
+        let structuredPath =  path.split(/--|-/g);
+        console.log("Structured path :",structuredPath);
+        let onclickPath = '.-';
+        for (let i = 0; i < structuredPath.length; i++) {
+            if (structuredPath[i] == ".") html += `<h2 class="folder-selector root" onclick="updatePath('.-')">./</h2>`;
+            else {
+                onclickPath += structuredPath[i];
+                html += `<h2 class="folder-selector" onclick="updatePath('${onclickPath}')">${structuredPath[i]}</h2>${(i >= structuredPath.length - 1)?'':'<h2>/</h2>'}`
+            };
+        }
+    }
+    html += '</div>';
     menu.innerHTML += html;
+}
+
+function reconstructPath(array, limitIndex) {
+    let path = '';
+    for (let i = 0; i <= limitIndex; i--) {
+        if (i == 0) path += '.-';
+        else path += '-' + array[i];
+    }
+    return path;
 }
 
 /**
@@ -55,18 +85,22 @@ function setPathSelector(path) {
  */
 
 async function setFolderContent(path) {
-    if (path !== '')  {
+    //Verif string
+    if (typeof path !== 'string')  {
         console.log('Path has to be a string');
         return null;
     }
-    console.log('Waiting for answer from the server');
-    let files = await fetch('http://localhost:5050/filepath/:path', {
+    //console.log('Waiting for answer from the server');
+    //Demande serv
+    let files = await fetch(`http://localhost:5050/filepath/${path}`, {
         headers : {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     }).then(response => response.json());
-    console.log(files);
+    console.log("Files : ",files);
+
+    //Init html
     for (let i = 0; i < files.content.length; i++) {
         let html;
         if (files.content[i].indexOf('.') == 0) {continue;}
@@ -87,9 +121,9 @@ async function setFolderContent(path) {
     }
     let folders = contentDisplayer.getElementsByClassName('folder');  
     for (let i = 0; i < folders.length; i++) {
-        let nextPath = path + '/' + folders[i].lastElementChild.textContent.toString();
+        let nextPath = path + '-' + folders[i].lastElementChild.textContent.toString();
         console.log(nextPath);
-        folders[i].addEventListener(('dblclick', (event, bis)=> {updatePath(nextPath)}));
+        folders[i].addEventListener('dblclick', () => updatePath(nextPath.toString()));
     };
 }
 

@@ -20,13 +20,12 @@ app.get('/', async (req, res) =>{
 app.get('/filepath/:path', async(req,res) => {
   console.log(req.params);
   let path = req.params.path;
-  
   path = path.replace(/-/g, '/');
   
   
   
   
-  let folderContent = await IO.getDirContent(PATH.resolve());
+  let folderContent = await IO.getDirContent(PATH.resolve(path));
   console.log(folderContent);
   res.status(200).json({content : folderContent});
   res.end();

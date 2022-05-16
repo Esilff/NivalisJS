@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve" : "nodemon ./src/app.js"
+    "serve": "nodemon ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Esilff/NivalisJS#readme",
   "dependencies": {
     "express": "^4.18.1",
+    "fs.promises": "^0.1.2",
     "nodemon": "^2.0.16"
   }
 }
