@@ -107,6 +107,28 @@
 
 .root {margin-left: 5px;}
 
+#options-menu {
+    position: absolute;
+    z-index: 5;
+    width: 250px;
+    height: auto;
+    top: 50%;
+    border-radius: 5px;
+    background: #647480;
+    overflow: hidden;
+    transition: ease 0.1s opacity;
+}
+
+#options-menu-content {
+   
+    height: inherit;
+}
+
+.options-menu-item {
+    width: 100%;
+    height: 20px;
+}
+
 @media screen and (max-width:800px) {
     .logo-container p {
         font-size: 60%;

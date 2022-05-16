@@ -2,6 +2,7 @@ var path = '.-';
 const menu = document.querySelector('#menu');
 const contentDisplayer = document.querySelector('#folder-content');
 const zoomController = document.querySelector('#zoom-controller');
+const optionMenu = document.querySelector('#options-menu');
 
 /* --- Getting root content on load ---  */
 
@@ -12,7 +13,24 @@ window.addEventListener('load', () => {
 
 window.addEventListener('contextmenu', (e)=> {
     e.preventDefault();
+    optionMenu.style.left = e.x + 'px';
+    optionMenu.style.top = e.y + 'px';
+    optionMenu.style.display = 'block';
+    optionMenu.style.opacity = 1;
 }, false);
+
+window.addEventListener('click', (e)=> {
+    let rect = optionMenu.getBoundingClientRect();
+    let optionMenuX = rect.left;
+    let optionMenuY = rect.top;
+    let width = optionMenu.clientWidth;
+    let height = optionMenu.clientHeight;
+    //console.log('Mouse var :',e.x,e.y,"Menu var :",optionMenuX,optionMenuY, width, height);
+    if (e.x < optionMenuX || e.x > optionMenuX + width || e.y < optionMenuY || e.y > optionMenuY + height) {
+        optionMenu.style.opacity = 0;
+        setTimeout(()=>optionMenu.style.display = 'none',200);
+    }
+})
 
 
 /* ----- UTIL FUNCTIONS ----- */
