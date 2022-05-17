@@ -20,14 +20,12 @@
     </body>
     <div contextmenu="right-click" id="options-menu">
         <div type="context" id="options-menu-content">
-            <div class="options-menu-item" onclick="showCreator()">Create</div>
+            <div class="options-menu-item" onclick="displayCreator()">Create</div>
             <div class="options-menu-item" onclick="console.log('delete')">Delete</div>
         </div>
     </div>
-    <div id="creator">
-        <form action="" method="get">
-            <input type="text" name="" id="">
-            <input type="submit" onclick="createFile()">
-        </form>
+    <div id="creator">      
+        <input type="text" id="name-input">
+        <button id="name-sender" onclick="createContent()">Create</button>
     </div>
 </html>

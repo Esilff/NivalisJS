@@ -3,6 +3,7 @@ const menu = document.querySelector('#menu');
 const contentDisplayer = document.querySelector('#folder-content');
 const zoomController = document.querySelector('#zoom-controller');
 const optionMenu = document.querySelector('#options-menu');
+const creator = document.querySelector('#creator');
 
 /* --- Getting root content on load ---  */
 
@@ -15,25 +16,32 @@ window.addEventListener('contextmenu', (e)=> {
     e.preventDefault();
     optionMenu.style.left = e.x + 'px';
     optionMenu.style.top = e.y + 'px';
-    optionMenu.style.display = 'block';
-    optionMenu.style.opacity = 1;
+    showMenu(optionMenu);
 }, false);
 
 window.addEventListener('click', (e)=> {
-    let rect = optionMenu.getBoundingClientRect();
-    let optionMenuX = rect.left;
-    let optionMenuY = rect.top;
-    let width = optionMenu.clientWidth;
-    let height = optionMenu.clientHeight;
-    //console.log('Mouse var :',e.x,e.y,"Menu var :",optionMenuX,optionMenuY, width, height);
-    if (e.x < optionMenuX || e.x > optionMenuX + width || e.y < optionMenuY || e.y > optionMenuY + height) {
-        optionMenu.style.opacity = 0;
-        setTimeout(()=>optionMenu.style.display = 'none',200);
-    }
+    disableMenuOnClick(optionMenu, e);
+    if (!isHidden(optionMenu)) disableMenuOnClick(creator, e);
 })
 
 
 /* ----- UTIL FUNCTIONS ----- */
+
+
+function displayCreator() {
+    hideMenu(optionMenu);
+    showMenu(creator);
+}
+
+async function createContent() {
+    const name = document.querySelector('#name-input').value;
+    console.log('Filename to create : ', name);
+    if (name != '')
+    fetch(`http://localhost:5050/io/create/${path}/${name}`);
+    hideMenu(creator);
+    contentDisplayer.innerHTML = '';
+    setFolderContent(path);
+}
 
 /**
  * Updates the ui using the new path passed in parameter. Used in case of a double click on a folder or on a click in the path selector.
@@ -89,7 +97,10 @@ function setPathSelector(path) {
 
 
 /**
- * 
+ * Take a folder path in parameter and send a request to the node server in order to get the content of the folder.
+ * The response is transformed in html content and then a double click event is added in order to get IO navigation.
+ * This function is firstly used on load to access the rootpath of the project. Else, it's used in the update function
+ * when a double click on folder occurs or when a click on a path node (in the navbar) occurs.
  * @param {String} path A path to a folder
  * @returns The content of the folder.
  */
@@ -135,6 +146,55 @@ async function setFolderContent(path) {
         console.log(nextPath);
         folders[i].addEventListener('dblclick', () => updatePath(nextPath.toString()));
     };
+}
+
+/**
+ * Check if the position of the mouse is in menu or not, if it's not, it will hide themenu.
+ * This function is used and only has to be used during an onclick event.
+ * @param {MouseEvent} e the mouse
+ */
+
+function disableMenuOnClick(menu, e) {
+    let rect = menu.getBoundingClientRect();
+    let menuX = rect.left;
+    let menuY = rect.top;
+    let width = menu.clientWidth;
+    let height = menu.clientHeight;
+    //console.log('Mouse var :',e.x,e.y,"Menu var :",optionMenuX,optionMenuY, width, height);
+    if (e.x < menuX || e.x > menuX + width || e.y < menuY || e.y > menuY + height) {
+        menu.style.opacity = 0;
+        setTimeout(()=>menu.style.display = 'none',200);
+    }
+}
+
+/**
+ * Take a menu in parameter and show it.
+ * @param {*} menu html element to be shown.
+ */
+
+function showMenu(menu) {
+    menu.style.display = 'block';
+    menu.style.opacity = 1;
+}
+
+/**
+ * Take a menu in parameter and hide it.
+ * @param {*} menu html element that has to disappear.
+ */
+
+function hideMenu(menu) {
+    menu.style.opacity = 0;
+    setTimeout(()=>menu.style.display = 'none',200);
+}
+
+/**
+ * Check if an html element is hidden or not.
+ * @param {*} menu 
+ * @returns true if hidden, false if not.
+ */
+
+function isHidden(menu) {
+    return (menu.style.opacity == 1 || menu.style.display != 'none')?true:false;
 }
 
 
