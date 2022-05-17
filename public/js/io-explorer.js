@@ -137,13 +137,14 @@ async function setFolderContent(path) {
                         <p>${files.content[i]}</p>
                     </div>`;
         }
+        console.log('HTML : ', html);
         contentDisplayer.innerHTML += html;
         
     }
     let folders = contentDisplayer.getElementsByClassName('folder');  
     for (let i = 0; i < folders.length; i++) {
         let nextPath = path + '-' + folders[i].lastElementChild.textContent.toString();
-        console.log(nextPath);
+        console.log('Next path :', nextPath);
         folders[i].addEventListener('dblclick', () => updatePath(nextPath.toString()));
     };
 }

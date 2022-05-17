@@ -34,8 +34,9 @@ app.get('/io/create/:path/:name', (req,res) => {
     path: req.params.path,
     name: req.params.name
   };
+  console.log('New data for creation : ', data.path, data.name);
   data.path = data.path.replace(/-/g, '/');
-  const content = data.path + data.name;
+  const content = data.path + '//' + data.name;
   console.log('New content : ', content);
   if (data.name.indexOf('.') < 0) {
     try {
