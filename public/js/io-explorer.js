@@ -1,4 +1,5 @@
 var path = '.-';
+var targetFolder;
 const menu = document.querySelector('#menu');
 const contentDisplayer = document.querySelector('#folder-content');
 const zoomController = document.querySelector('#zoom-controller');
@@ -146,6 +147,7 @@ async function setFolderContent(path) {
         let nextPath = path + '-' + folders[i].lastElementChild.textContent.toString();
         console.log('Next path :', nextPath);
         folders[i].addEventListener('dblclick', () => updatePath(nextPath.toString()));
+        folders[i].addEventListener('click', ()=> {changeTarget(folders[i])});
     };
 }
 
