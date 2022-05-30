@@ -19,6 +19,15 @@ app.get('/', async (req, res) =>{
   
 });
 
+app.get('/io/readfile/:path', async(req,res)=> {
+  let path = req.params.path;
+  path.replace(/-/g,'/');
+  console.log(path);
+  let fileContent = await IO.readFile(path);
+  res.status(200).json({content: fileContent});
+  res.end();
+}) 
+
 app.get('/filepath/:path', async(req,res) => {
   console.log(req.params);
   let path = req.params.path;

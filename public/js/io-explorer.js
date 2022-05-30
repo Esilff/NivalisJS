@@ -133,7 +133,7 @@ async function setFolderContent(path) {
                     </div>`;
         }
         else {
-            html = `<div class="logo-container">
+            html = `<div class="logo-container file">
                         <img src="./assets/logo/${files.content[i].substring(files.content[i].indexOf('.') + 1) + '.svg'}">
                         <p>${files.content[i]}</p>
                     </div>`;
@@ -142,7 +142,19 @@ async function setFolderContent(path) {
         contentDisplayer.innerHTML += html;
         
     }
-    let folders = contentDisplayer.getElementsByClassName('folder');  
+    let folders = contentDisplayer.getElementsByClassName('folder');
+    let fileList = contentDisplayer.getElementsByClassName('file');
+    for (let i = 0; i < fileList.length;i++) {
+        console.log("File : ", fileList[i]);
+        fileList[i].addEventListener('dblclick',async () => {
+            if (window.location !== window.parent.location) {
+                console.log("Message path :", path+fileList[i].lastElementChild.textContent.toString());
+                const message = await fetch(`http://localhost:5050/filepath/${path+fileList[i].lastElementChild.textContent.toString()}`)
+                console.log("Message : ", message);
+            }
+            else console.log('not in iframe');
+        })
+    }
     for (let i = 0; i < folders.length; i++) {
         let nextPath = path + '-' + folders[i].lastElementChild.textContent.toString();
         console.log('Next path :', nextPath);
