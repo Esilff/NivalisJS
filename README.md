@@ -1,2 +1,2 @@
 # NivalisJS
-A JS game engine
+A JS game engine (paused)
